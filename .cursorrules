@@ -1,0 +1,24 @@
+# KnightWriter — Cursor rules
+
+## Project
+- **KnightWriter** is a **macOS 13+ SwiftUI document-based app** (SPM-only, no .xcodeproj).
+- Architecture: **informal MVVM** — Model (single source of truth), Views (SwiftUI), Sync/coordination (SyncEngine + converters).
+
+## Model / View / Sync split
+- **Model**: `DocumentModel` (`ObservableObject`), `DocumentSnapshot`, `PositionMap`, and related types in `Models/`. Single source of truth; no UI or AppKit here.
+- **Views**: SwiftUI `View` structs in `Views/` (`ContentView`, `SourceEditorView`, `VisualEditorView`, `FormatToolbar`) observing the model. Keep views thin; delegate logic to model or engine.
+- **Sync/coordination**: `SyncEngine` and converter types (`MarkdownToRichConverter`, `RichTextToMarkdownConverter`) in `Engine/` keep source and visual editors in sync. Do not put UI or AppKit in engine or converters.
+
+## Code style and safety
+- **No force unwraps** (`!`) or **`try!`** in production code. Use optional binding, `guard`, or proper `try`/`catch` instead.
+- Prefer **async/await** over completion handlers or raw `DispatchQueue` where applicable.
+- **UI and model updates that affect `@Published` must run on the main actor.** Use `@MainActor` on types or methods that update UI or observable state, and avoid updating `@Published` from background threads.
+- Keep **side effects behind small protocols** where reasonable (e.g. persistence, paste handling) so they can be tested or swapped.
+
+## AppKit interop
+- Use AppKit only where necessary: `NSApplicationDelegateAdaptor`, `NSColor`, `NSTextView` wrappers, etc.
+- Keep AppKit **thin and isolated** (e.g. inside `NSViewRepresentable` / `NSViewControllerRepresentable`). Do not leak AppKit types or idioms into core model, converters, or view state.
+
+## Tooling
+- Format/lint: **SwiftFormat** (`.swiftformat`) and **SwiftLint** (`.swiftlint.yml`). Run `./Scripts/lint.sh` before committing.
+- Concurrency: prefer structured concurrency and main-actor isolation; avoid updating UI or `@Published` off-main.
