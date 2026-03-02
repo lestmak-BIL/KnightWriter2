@@ -1,7 +1,7 @@
 {
   "name": "knightwriter",
   "private": true,
-  "version": "1.0.0",
+  "version": "1.1.0",
   "type": "module",
   "scripts": {
     "dev": "vite",
@@ -18,10 +18,13 @@
   "dependencies": {
     "@codemirror/commands": "^6.7.4",
     "@codemirror/lang-markdown": "^6.3.1",
+    "@codemirror/search": "^6.6.0",
     "@codemirror/state": "^6.4.1",
     "@codemirror/theme-one-dark": "^6.1.2",
     "@codemirror/view": "^6.34.0",
     "@tiptap/extension-code-block-lowlight": "^2.10.2",
+    "@tiptap/extension-horizontal-rule": "^2.27.2",
+    "@tiptap/extension-image": "^2.27.2",
     "@tiptap/extension-link": "^2.27.2",
     "@tiptap/extension-task-item": "^2.10.2",
     "@tiptap/extension-task-list": "^2.10.2",
@@ -29,6 +32,7 @@
     "@tiptap/react": "^2.10.2",
     "@tiptap/starter-kit": "^2.10.2",
     "diff-match-patch": "^1.0.5",
+    "dompurify": "^3.3.1",
     "lodash.debounce": "^4.0.8",
     "lodash.throttle": "^4.1.1",
     "lowlight": "^3.1.0",
@@ -45,12 +49,14 @@
     "zustand": "^5.0.2"
   },
   "devDependencies": {
+    "@axe-core/playwright": "^4.11.1",
     "@eslint/js": "^9.15.0",
     "@playwright/test": "^1.58.2",
     "@tailwindcss/typography": "^0.5.15",
     "@testing-library/jest-dom": "^6.6.3",
     "@testing-library/react": "^16.0.1",
     "@types/diff-match-patch": "^1.0.8",
+    "@types/dompurify": "^3.0.5",
     "@types/lodash.debounce": "^4.0.9",
     "@types/lodash.throttle": "^4.1.9",
     "@types/markdown-it": "^14.1.2",
